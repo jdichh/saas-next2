@@ -8,7 +8,9 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="relative h-full">
-      <Sidebar />
+      <div className="hidden h-full md:w-64 md:flex md:flex-col md:fixed md:inset-y-0 z-[100]">
+        <Sidebar />
+      </div>
       <Navbar />
       <main className="md:pl-[17rem]">{children}</main>
     </div>

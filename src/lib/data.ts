@@ -9,12 +9,6 @@ import {
 
 export const links = [
   {
-    title: "Test Route Focused",
-    icon: MessagesSquare,
-    href: "/dashboard",
-    color: "text-emerald-600",
-  },
-  {
     title: "Converse",
     icon: MessagesSquare,
     href: "/converse",

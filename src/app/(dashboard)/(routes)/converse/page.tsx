@@ -3,6 +3,7 @@
 import * as ZOD from "zod";
 import axios from "axios";
 import Heading from "@/components/heading";
+import { useState } from "react";
 import { MessagesSquare, SendHorizonalIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,8 +11,8 @@ import { formSchema } from "./constants";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { EmptyChatbox } from "@/components/empty-chatbox";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 
 export default function ConversePage() {
@@ -54,7 +55,7 @@ export default function ConversePage() {
         iconColor="text-emerald-600"
         bgColor="bg-emerald-50"
       />
-      <div className="px-4 lg:px-8">
+      <div className="px-4 lg:px-8 my-8">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -64,7 +65,7 @@ export default function ConversePage() {
               name="prompt"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormControl className="m-0 p-0">
+                  <FormControl className="m-0 py-0">
                     <Input
                       className="outline-none border-0 focus-visible:ring-0 focus-visible:ring-transparent"
                       disabled={isSubmitting}
@@ -81,7 +82,8 @@ export default function ConversePage() {
           </form>
         </Form>
       </div>
-      <div className="space-y-4 mt-4">
+      <div className="space-y-4">
+        {messages.length === 0 && !isSubmitting && <EmptyChatbox label="No conversations."/>}
         <div className="flex flex-col gap-y-4">
           {messages.map((message) => (
             <p key={message.content}>{message.content}</p>

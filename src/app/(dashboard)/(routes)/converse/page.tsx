@@ -1,6 +1,7 @@
 "use client";
 
 import * as ZOD from "zod";
+import axios from "axios";
 import Heading from "@/components/heading";
 import { MessagesSquare, SendHorizonalIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -9,9 +10,11 @@ import { formSchema } from "./constants";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
+import { useRouter } from "next/navigation";
 
 export default function ConversePage() {
+  const router = useRouter();
+
   const form = useForm<ZOD.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -21,7 +24,13 @@ export default function ConversePage() {
 
   const isSubmitting = form.formState.isSubmitting;
   const onSubmit = async (values: ZOD.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      console.log(values);
+    } catch (error: any) {
+      console.log(error);
+    } finally {
+      router.refresh();
+    }
   };
   return (
     <>
@@ -53,7 +62,7 @@ export default function ConversePage() {
                 </FormItem>
               )}
             />
-            <Button className="w-full md:w-fit">
+            <Button className="w-full md:w-fit" disabled={isSubmitting}>
               <SendHorizonalIcon size={18} />
             </Button>
           </form>

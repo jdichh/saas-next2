@@ -3,7 +3,7 @@
 import * as ZOD from "zod";
 import axios from "axios";
 import Heading from "@/components/heading";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { MessagesSquare, SendHorizonalIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,12 +12,15 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { EmptyChatbox } from "@/components/empty-chatbox";
+import { Loader } from "@/components/loader";
+import { UserAvatar } from "@/components/user-avatar";
+import { BotAvatar } from "@/components/bot-avatar";
 import { useRouter } from "next/navigation";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
-import { Loader } from "@/components/loader";
 import { cn } from "@/lib/utils";
 
 export default function ConversePage() {
+  const lastMessage = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
   const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
 
@@ -48,6 +51,15 @@ export default function ConversePage() {
       router.refresh();
     }
   };
+
+  useEffect(() => {
+    if (lastMessage.current) {
+      setTimeout(() => {
+        lastMessage.current?.scrollIntoView({ behavior: "smooth" });
+      }, 0);
+    }
+  }, [messages]);
+
   return (
     <>
       <Heading
@@ -57,11 +69,36 @@ export default function ConversePage() {
         iconColor="text-emerald-600"
         bgColor="bg-emerald-50"
       />
-      <div className="px-4 lg:px-8 my-8 space-y-8">
+      <div className="px-4 lg:px-8 my-8 space-y-8 w-full max-w-4xl mx-auto">
+        {messages.length === 0 && !isSubmitting && (
+          <EmptyChatbox label="No conversations." />
+        )}
+        <div className="flex flex-col gap-y-4">
+          {messages.map((message) => (
+            <div
+              key={message.content}
+              className={cn(
+                "flex items-start w-full gap-x-4 rounded-md p-4",
+                message.role === "user"
+                  ? "bg-white border border-black/10 flex items-center"
+                  : "bg-muted flex items-center flex-row-reverse"
+              )}
+            >
+              {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
+              <p className="text-sm leading-[1.7] mb-">{message.content}</p>
+            </div>
+          ))}
+          <div className="scroll-mb-[100rem]" ref={lastMessage} />
+        </div>
+        {isSubmitting && (
+          <div className="flex items-center justify-center bg-muted p-8 rounded-lg">
+            <Loader />
+          </div>
+        )}
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col md:flex-row justify-between items-center gap-2 rounded-md border w-full py-4 px-3 md:px-6 focus-within:shadow-sm"
+            className="flex flex-col md:flex-row justify-between items-center gap-2 rounded-md border w-full py-2 px-3  focus-within:shadow-sm"
           >
             <FormField
               name="prompt"
@@ -83,30 +120,6 @@ export default function ConversePage() {
             </Button>
           </form>
         </Form>
-
-        {isSubmitting && (
-          <div className="flex items-center justify-center bg-muted p-8 rounded-lg">
-            <Loader />
-          </div>
-        )}
-        {messages.length === 0 && !isSubmitting && (
-          <EmptyChatbox label="No conversations." />
-        )}
-        <div className="flex flex-col gap-y-4">
-          {messages.map((message) => (
-            <p
-              key={message.content}
-              className={cn(
-                "flex items-start w-full gap-x-8 rounded-md",
-                message.role === "user"
-                  ? "bg-white border border-black/10"
-                  : "bg-muted"
-              )}
-            >
-              {message.content}
-            </p>
-          ))}
-        </div>
       </div>
     </>
   );

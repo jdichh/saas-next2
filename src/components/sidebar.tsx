@@ -11,7 +11,7 @@ export default function Sidebar() {
   const pathName = usePathname();
 
   return (
-    <div className="flex flex-col h-full space-y-4 p-4 text-white bg-slate-900">
+    <nav className="flex flex-col h-full space-y-4 p-4 text-white bg-slate-900">
       <Link href="/dashboard">
         <h1 className="flex flex-row items-center justify-center gap-1 font-semibold hover:text-sky-400 group transition">
           <RadiusIcon className="group-hover:text-sky-400 transition h-8 w-8" />
@@ -24,7 +24,10 @@ export default function Sidebar() {
             <Link
               href={link.href}
               key={link.href}
-              className="flex group p-3 w-full justify-start font-medium cursor-pointer hover:bg-white/10 rounded-md transition ease-in-out"
+              className={cn(
+                "flex group p-3 w-full justify-start font-medium cursor-pointer hover:bg-white/10 rounded-md transition ease-in-out",
+                pathName === link.href ? "bg-white/10 outline outline-1" : ""
+              )}
             >
               <div className="flex items-center gap-2">
                 <link.icon className={cn("h-5 w-5", link.color)} /> {link.title}
@@ -33,6 +36,6 @@ export default function Sidebar() {
           </li>
         ))}
       </ul>
-    </div>
+    </nav>
   );
 }

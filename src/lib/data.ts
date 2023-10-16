@@ -2,6 +2,12 @@ import { Code2Icon, HeadphonesIcon, ImageIcon, MessagesSquare, SettingsIcon, Vid
 
 export const links = [
     {
+        title: "Test Route Focused",
+        icon: MessagesSquare,
+        href: "/dashboard",
+        color: "text-emerald-500"
+    },
+    {
         title: "Converse",
         icon: MessagesSquare,
         href: "/converse",

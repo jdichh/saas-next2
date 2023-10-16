@@ -5,7 +5,7 @@ import axios from "axios";
 import Heading from "@/components/heading";
 import ReactMarkdown from "react-markdown";
 import { useState, useRef, useEffect } from "react";
-import { Code2Icon, SendHorizonalIcon } from "lucide-react";
+import { Code2Icon, SendHorizontalIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "./constants";
@@ -136,7 +136,7 @@ export default function CodeGenPage() {
               )}
             />
             <Button disabled={isSubmitting}>
-              <SendHorizonalIcon size={18} />
+              <SendHorizontalIcon size={18} />
             </Button>
           </form>
         </Form>

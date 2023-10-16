@@ -3,6 +3,7 @@
 import { Card } from "@/components/ui/card";
 import { tools } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
 
 export default function Page() {
   return (
@@ -19,14 +20,15 @@ export default function Page() {
         {tools.map((tool) => (
           <Card
             key={tool.href}
-            className="flex items-center justify-between p-4 border-black/5 hover:shadow-md transition cursor-pointer"
+            className="flex items-center justify-between p-4 border-black/5 hover:shadow-md transition cursor-pointer group"
           >
-            <div className="flex items-center gap-x-2">
+            <div className="flex items-center gap-x-2 ">
               <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
                 <tool.icon className={cn("w-5 h-5", tool.color)} />
               </div>
               <span className="font-medium">{tool.title}</span>
             </div>
+            <ArrowRight className="w-5 h-5 group-hover:scale-[1.3] transition"/>
           </Card>
         ))}
       </div>

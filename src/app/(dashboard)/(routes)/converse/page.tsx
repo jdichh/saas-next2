@@ -11,9 +11,12 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 
 export default function ConversePage() {
   const router = useRouter();
+  const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
 
   const form = useForm<ZOD.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -25,7 +28,17 @@ export default function ConversePage() {
   const isSubmitting = form.formState.isSubmitting;
   const onSubmit = async (values: ZOD.infer<typeof formSchema>) => {
     try {
-      console.log(values);
+      const userPrompts: ChatCompletionMessageParam = {
+        role: "user",
+        content: values.prompt,
+      };
+      const newMessages = [...messages, userPrompts];
+      const response = await axios.post("/api/converse", {
+        messages: newMessages,
+      });
+
+      setMessages((current) => [...current, userPrompts, response.data]);
+      form.reset();
     } catch (error: any) {
       console.log(error);
     } finally {
@@ -36,7 +49,7 @@ export default function ConversePage() {
     <>
       <Heading
         title="Conversate"
-        description="Have a chat with our advanced AI model."
+        description="Have a chat with OpenAI's GPT."
         Icon={MessagesSquare}
         iconColor="text-emerald-600"
         bgColor="bg-emerald-50"
@@ -67,6 +80,13 @@ export default function ConversePage() {
             </Button>
           </form>
         </Form>
+      </div>
+      <div className="space-y-4 mt-4">
+        <div className="flex flex-col gap-y-4">
+          {messages.map((message) => (
+            <p key={message.content}>{message.content}</p>
+          ))}
+        </div>
       </div>
     </>
   );

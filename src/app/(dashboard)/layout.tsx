@@ -12,7 +12,7 @@ export default function DashboardLayout({
         <Sidebar />
       </header>
       <Navbar />
-      {children}
+      <main className="md:ml-[17rem]">{children}</main>
     </div>
   );
 }

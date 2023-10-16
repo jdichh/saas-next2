@@ -9,15 +9,15 @@ import { useRouter } from "next/navigation";
 export default function Page() {
   const router = useRouter();
   return (
-    <main className="md:ml-[17rem]">
-      <div className="mb-8 space-y-1">
+    <>
+      <hgroup className="mb-8 space-y-1">
         <h2 className="text-2xl font-semibold text-center md:text-3xl md:text-left">
           Utilize AI in your digital needs.
         </h2>
         <h3 className="text-muted-foreground text-center md:text-left">
           For programmers and AI "artists" alike.
         </h3>
-      </div>
+      </hgroup>
       <div className="px-2 md:px-20 lg:px-32 space-y-1">
         {tools.map((tool) => (
           <Card
@@ -35,6 +35,6 @@ export default function Page() {
           </Card>
         ))}
       </div>
-    </main>
+    </>
   );
 }

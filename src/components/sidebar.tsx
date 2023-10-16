@@ -29,7 +29,7 @@ export default function Sidebar() {
                 pathName === link.href ? "bg-white/10 outline outline-1" : ""
               )}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-x-2">
                 <link.icon className={cn("h-5 w-5", link.color)} /> {link.title}
               </div>
             </Link>

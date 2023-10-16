@@ -100,7 +100,7 @@ export default function ConversePage() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col md:flex-row justify-between items-center gap-2 rounded-md border py-2 px-3 focus-within:shadow-sm"
+            className="flex flex-row justify-between items-center gap-2 rounded-md border py-2 px-3 focus-within:shadow-sm"
           >
             <FormField
               name="prompt"
@@ -117,7 +117,7 @@ export default function ConversePage() {
                 </FormItem>
               )}
             />
-            <Button className="w-full md:w-fit" disabled={isSubmitting}>
+            <Button disabled={isSubmitting}>
               <SendHorizonalIcon size={18} />
             </Button>
           </form>

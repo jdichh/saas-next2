@@ -15,6 +15,7 @@ import { EmptyChatbox } from "@/components/empty-chatbox";
 import { useRouter } from "next/navigation";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import { Loader } from "@/components/loader";
+import { cn } from "@/lib/utils";
 
 export default function ConversePage() {
   const router = useRouter();
@@ -83,7 +84,7 @@ export default function ConversePage() {
           </form>
         </Form>
 
-        {true && (
+        {isSubmitting && (
           <div className="flex items-center justify-center bg-muted p-8 rounded-lg">
             <Loader />
           </div>
@@ -93,7 +94,17 @@ export default function ConversePage() {
         )}
         <div className="flex flex-col gap-y-4">
           {messages.map((message) => (
-            <p key={message.content}>{message.content}</p>
+            <p
+              key={message.content}
+              className={cn(
+                "flex items-start w-full gap-x-8 rounded-md",
+                message.role === "user"
+                  ? "bg-white border border-black/10"
+                  : "bg-muted"
+              )}
+            >
+              {message.content}
+            </p>
           ))}
         </div>
       </div>

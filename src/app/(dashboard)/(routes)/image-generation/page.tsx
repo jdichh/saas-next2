@@ -3,48 +3,46 @@
 import * as ZOD from "zod";
 import axios from "axios";
 import Heading from "@/components/heading";
-import ReactMarkdown from "react-markdown";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { ImageIcon, SendHorizontalIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formSchema } from "./constants";
+import { amtOptions, formSchema } from "./constants";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { EmptyChatbox } from "@/components/empty-chatbox";
 import { Loader } from "@/components/loader";
-import { UserAvatar } from "@/components/user-avatar";
-import { BotAvatar } from "@/components/bot-avatar";
 import { useRouter } from "next/navigation";
-import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import { cn } from "@/lib/utils";
 
 export default function ImageGenPage() {
-  const lastMessage = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
-  const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
+  const [images, setImages] = useState<string[]>([]);
 
   const form = useForm<ZOD.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       prompt: "",
+      amount: "1",
+      resolution: "512x512",
     },
   });
 
   const isSubmitting = form.formState.isSubmitting;
   const onSubmit = async (values: ZOD.infer<typeof formSchema>) => {
     try {
-      const userPrompts: ChatCompletionMessageParam = {
-        role: "user",
-        content: values.prompt,
-      };
-      const newMessages = [...messages, userPrompts];
-      const response = await axios.post("/api/code", {
-        messages: newMessages,
-      });
-
-      setMessages((current) => [...current, userPrompts, response.data]);
+      setImages([]);
+      const response = await axios.post("/api/image", values);
+      const imgUrls = response.data.map((image: { url: string }) => image.url);
+      setImages(imgUrls);
       form.reset();
     } catch (error: any) {
       console.log(error);
@@ -52,14 +50,6 @@ export default function ImageGenPage() {
       router.refresh();
     }
   };
-
-  useEffect(() => {
-    if (lastMessage.current) {
-      setTimeout(() => {
-        lastMessage.current?.scrollIntoView({ behavior: "smooth" });
-      }, 0);
-    }
-  }, [messages]);
 
   return (
     <>
@@ -71,54 +61,10 @@ export default function ImageGenPage() {
         bgColor="bg-amber-50"
       />
       <div className="px-2 space-y-3 w-full max-w-4xl mx-auto">
-        <div className="flex flex-col gap-y-4">
-          {messages.map((message) => (
-            <div
-              key={message.content}
-              className={cn(
-                "flex items-start w-full gap-x-4 rounded-md p-4",
-                message.role === "user"
-                  ? "bg-white border border-black/10 flex items-center"
-                  : "bg-muted flex items-center flex-row-reverse"
-              )}
-            >
-              {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
-              <ReactMarkdown
-                className="flex flex-col text-sm overflow-hidden leading-relaxed"
-                components={{
-                  pre: ({ node, ...props }) => (
-                    <div className="overflow-auto w-full my-2 bg-slate-300/25 p-2 rounded-md">
-                      <pre {...props} />
-                    </div>
-                  ),
-                  code: ({ node, ...props }) => (
-                    <code
-                      className="overflow-auto w-full my-2 bg-slate-300/25 p-1 rounded-md"
-                      {...props}
-                    />
-                  ),
-                }}
-              >
-                {message.content || ""}
-              </ReactMarkdown>
-            </div>
-          ))}
-          <div className="scroll-mb-[100rem]" ref={lastMessage} />
-        </div>
-
-        {isSubmitting && (
-          <div className="flex items-center justify-center bg-muted p-8 rounded-lg">
-            <Loader />
-          </div>
-        )}
-        {messages.length === 0 && !isSubmitting && (
-          <EmptyChatbox label="No conversations." />
-        )}
-
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-row justify-between items-center gap-2 rounded-md border py-2 px-3 focus-within:shadow-sm"
+            className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 rounded-md border py-2 px-3 focus-within:shadow-sm"
           >
             <FormField
               name="prompt"
@@ -128,10 +74,39 @@ export default function ImageGenPage() {
                     <Input
                       className="outline-none border-0 focus-visible:ring-0 focus-visible:ring-transparent"
                       disabled={isSubmitting}
-                      placeholder="How do I center a div?"
+                      placeholder="An image of the most sus person in the world."
                       {...field}
                     />
                   </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="amount"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <Select
+                    disabled={isSubmitting}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue defaultValue={field.value} />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {amtOptions.map((amt) => (
+                        <SelectItem key={amt.value} value={amt.value}>
+                          <span className="whitespace-nowrap mr-2">
+                            {amt.label}
+                          </span>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </FormItem>
               )}
             />
@@ -140,6 +115,15 @@ export default function ImageGenPage() {
             </Button>
           </form>
         </Form>
+
+        {isSubmitting && (
+          <div className="flex items-center justify-center bg-muted p-8 rounded-lg">
+            <Loader />
+          </div>
+        )}
+        {images.length === 0 && !isSubmitting && (
+          <EmptyChatbox label="No generated images yet." />
+        )}
       </div>
     </>
   );

@@ -3,8 +3,9 @@
 import * as ZOD from "zod";
 import axios from "axios";
 import Heading from "@/components/heading";
+import ReactMarkdown from "react-markdown";
 import { useState, useRef, useEffect } from "react";
-import { MessagesSquare, SendHorizonalIcon } from "lucide-react";
+import { Code2Icon, SendHorizonalIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "./constants";
@@ -19,7 +20,7 @@ import { useRouter } from "next/navigation";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import { cn } from "@/lib/utils";
 
-export default function ConversePage() {
+export default function CodeGenPage() {
   const lastMessage = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
   const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
@@ -39,7 +40,7 @@ export default function ConversePage() {
         content: values.prompt,
       };
       const newMessages = [...messages, userPrompts];
-      const response = await axios.post("/api/converse", {
+      const response = await axios.post("/api/code", {
         messages: newMessages,
       });
 
@@ -63,11 +64,11 @@ export default function ConversePage() {
   return (
     <>
       <Heading
-        title="Conversate"
-        description="Have a chat with an AI."
-        Icon={MessagesSquare}
-        iconColor="text-emerald-600"
-        bgColor="bg-emerald-50"
+        title="Code Generation"
+        description="Team up with an AI in programming."
+        Icon={Code2Icon}
+        iconColor="text-sky-600"
+        bgColor="bg-sky-50"
       />
       <div className="px-2 space-y-3 w-full max-w-4xl mx-auto">
         <div className="flex flex-col gap-y-4">
@@ -82,7 +83,24 @@ export default function ConversePage() {
               )}
             >
               {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
-              <p className="text-sm leading-[1.7] mb-">{message.content}</p>
+              <ReactMarkdown
+                className="flex flex-col text-sm overflow-hidden leading-relaxed"
+                components={{
+                  pre: ({ node, ...props }) => (
+                    <div className="overflow-auto w-full my-2 bg-slate-300/25 p-2 rounded-md">
+                      <pre {...props} />
+                    </div>
+                  ),
+                  code: ({ node, ...props }) => (
+                    <code
+                      className="overflow-auto w-full my-2 bg-slate-300/25 p-1 rounded-md"
+                      {...props}
+                    />
+                  ),
+                }}
+              >
+                {message.content || ""}
+              </ReactMarkdown>
             </div>
           ))}
           <div className="scroll-mb-[100rem]" ref={lastMessage} />
@@ -110,7 +128,7 @@ export default function ConversePage() {
                     <Input
                       className="outline-none border-0 focus-visible:ring-0 focus-visible:ring-transparent"
                       disabled={isSubmitting}
-                      placeholder="Is Zuckerberg a lizard?"
+                      placeholder="How do I center a div?"
                       {...field}
                     />
                   </FormControl>

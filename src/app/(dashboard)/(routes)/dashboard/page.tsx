@@ -18,12 +18,12 @@ export default function Page() {
           For programmers and AI "artists" alike.
         </h3>
       </hgroup>
-      <div className="px-2 md:px-20 lg:px-32 space-y-1">
+      <div className="px-2 space-y-2 w-full max-w-4xl mx-auto">
         {tools.map((tool) => (
           <Card
             onClick={() => router.push(tool.href)}
             key={tool.href}
-            className="flex items-center justify-between p-4 border-black/5 hover:shadow-md transition cursor-pointer group"
+            className="flex items-center justify-between p-4 border-black/5 transition cursor-pointer hover:scale-[1.015] hover:shadow-md"
           >
             <div className="flex items-center gap-x-2 ">
               <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
@@ -31,7 +31,7 @@ export default function Page() {
               </div>
               <span className="font-medium">{tool.title}</span>
             </div>
-            <ArrowRight className="w-5 h-5 group-hover:scale-[1.3] transition" />
+            <ArrowRight className="w-5 h-5 transition" />
           </Card>
         ))}
       </div>

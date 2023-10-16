@@ -23,7 +23,7 @@ export default function Heading({
       </div>
       <hgroup>
         <h2 className="text-xl font-semibold">{title}</h2>
-        <h3 className="text-sm text-muted-foreground">{description}</h3>
+        <h3 className="text-xs md:text-sm text-muted-foreground">{description}</h3>
       </hgroup>
     </div>
   );

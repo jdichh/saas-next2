@@ -14,7 +14,7 @@ export default function Sidebar() {
     <nav className="flex flex-col h-full space-y-4 p-4 text-white bg-slate-900">
       <Link href="/dashboard">
         <h1 className="flex flex-row items-center justify-center gap-1 font-semibold hover:text-violet-400 group transition">
-          <RadiusIcon className="group-hover:text-violet-400 transition h-8 w-8" />
+          <RadiusIcon className="group-hover:text-violet-400 transition" size={30}/>
           dreamscape
         </h1>
       </Link>

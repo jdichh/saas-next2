@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { EmptyChatbox } from "@/components/empty-chatbox";
 import { useRouter } from "next/navigation";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
+import { Loader } from "@/components/loader";
 
 export default function ConversePage() {
   const router = useRouter();
@@ -55,7 +56,7 @@ export default function ConversePage() {
         iconColor="text-emerald-600"
         bgColor="bg-emerald-50"
       />
-      <div className="px-4 lg:px-8 my-8">
+      <div className="px-4 lg:px-8 my-8 space-y-8">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -81,9 +82,15 @@ export default function ConversePage() {
             </Button>
           </form>
         </Form>
-      </div>
-      <div className="space-y-4">
-        {messages.length === 0 && !isSubmitting && <EmptyChatbox label="No conversations."/>}
+
+        {true && (
+          <div className="flex items-center justify-center bg-muted p-8 rounded-lg">
+            <Loader />
+          </div>
+        )}
+        {messages.length === 0 && !isSubmitting && (
+          <EmptyChatbox label="No conversations." />
+        )}
         <div className="flex flex-col gap-y-4">
           {messages.map((message) => (
             <p key={message.content}>{message.content}</p>

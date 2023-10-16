@@ -17,7 +17,7 @@ export default function Heading({
   bgColor,
 }: HeadingProps) {
   return (
-    <div className="flex items-center gap-x-2 mb-8 px-4 lg:px-8">
+    <div className="flex items-center justify-center md:justify-start gap-x-2 mb-8 px-4 lg:px-8">
       <div className={cn("p-2 w-fit rounded-md", bgColor)}>
         <Icon className={cn("w-8 h-8", iconColor)} />
       </div>

@@ -69,10 +69,7 @@ export default function ConversePage() {
         iconColor="text-emerald-600"
         bgColor="bg-emerald-50"
       />
-      <div className="px-4 lg:px-8 my-8 space-y-8 w-full max-w-4xl mx-auto">
-        {messages.length === 0 && !isSubmitting && (
-          <EmptyChatbox label="No conversations." />
-        )}
+      <div className="px-4 lg:px-8 my-8 space-y-4 w-full max-w-4xl mx-auto">
         <div className="flex flex-col gap-y-4">
           {messages.map((message) => (
             <div
@@ -90,15 +87,20 @@ export default function ConversePage() {
           ))}
           <div className="scroll-mb-[100rem]" ref={lastMessage} />
         </div>
+
         {isSubmitting && (
           <div className="flex items-center justify-center bg-muted p-8 rounded-lg">
             <Loader />
           </div>
         )}
+        {messages.length === 0 && !isSubmitting && (
+          <EmptyChatbox label="No conversations." />
+        )}
+
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col md:flex-row justify-between items-center gap-2 rounded-md border w-full py-2 px-3  focus-within:shadow-sm"
+            className="flex flex-col md:flex-row justify-between items-center gap-2 rounded-md border py-2 px-3 focus-within:shadow-sm"
           >
             <FormField
               name="prompt"
@@ -108,7 +110,7 @@ export default function ConversePage() {
                     <Input
                       className="outline-none border-0 focus-visible:ring-0 focus-visible:ring-transparent"
                       disabled={isSubmitting}
-                      placeholder="Is it true that Mark Zuckerberg is a lizard?"
+                      placeholder="Is Zuckerberg a lizard?"
                       {...field}
                     />
                   </FormControl>

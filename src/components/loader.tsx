@@ -2,7 +2,7 @@ import { RadiusIcon } from "lucide-react";
 
 export function Loader() {
   return (
-    <div className="flex flex-col items-center justify-center h-full gap-y-2">
+    <div className="flex flex-row items-center justify-center h-full gap-x-2">
         <div className="relative animate-spin">
             <RadiusIcon size={30}/>
         </div>

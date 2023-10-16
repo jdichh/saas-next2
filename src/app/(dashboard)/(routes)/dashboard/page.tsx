@@ -4,8 +4,10 @@ import { Card } from "@/components/ui/card";
 import { tools } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
   return (
     <main className="md:ml-[17rem]">
       <div className="mb-8 space-y-1">
@@ -19,6 +21,7 @@ export default function Page() {
       <div className="px-2 md:px-20 lg:px-32 space-y-1">
         {tools.map((tool) => (
           <Card
+            onClick={() => router.push(tool.href)}
             key={tool.href}
             className="flex items-center justify-between p-4 border-black/5 hover:shadow-md transition cursor-pointer group"
           >
@@ -28,7 +31,7 @@ export default function Page() {
               </div>
               <span className="font-medium">{tool.title}</span>
             </div>
-            <ArrowRight className="w-5 h-5 group-hover:scale-[1.3] transition"/>
+            <ArrowRight className="w-5 h-5 group-hover:scale-[1.3] transition" />
           </Card>
         ))}
       </div>

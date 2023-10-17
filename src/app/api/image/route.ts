@@ -40,7 +40,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(response.data);
   } catch (error) {
-    console.log("[IMAGE_ERROR]: ", error);
+    console.log(error);
     return new NextResponse("Internal error: ", { status: 500 });
   }
 }

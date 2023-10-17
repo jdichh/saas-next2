@@ -26,6 +26,7 @@ import { amtOptions, formSchema, resolutionOptions } from "./constants";
 
 export default function ImageGenPage() {
   const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [images, setImages] = useState<string[]>([]);
 
   const form = useForm<ZOD.infer<typeof formSchema>>({
@@ -44,9 +45,10 @@ export default function ImageGenPage() {
       const response = await axios.post("/api/image", values);
       const imgUrls = response.data.map((image: { url: string }) => image.url);
       setImages(imgUrls);
-    
+      setErrorMessage(null);
     } catch (error: any) {
       console.log(error);
+      setErrorMessage("Error.");
     } finally {
       router.refresh();
     }
@@ -151,17 +153,26 @@ export default function ImageGenPage() {
             <Loader />
           </div>
         )}
+        {errorMessage && !isSubmitting && (
+          <div className="flex items-center justify-center bg-muted p-8 rounded-lg">
+            {errorMessage}
+          </div>
+        )}
         {images.length === 0 && !isSubmitting && (
           <EmptyChatbox label="No generated images yet." />
         )}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-8">
           {images.map((src) => (
             <Card key={src} className="rounded-md overflow-hidden">
               <div className="relative aspect-square">
                 <Image alt="image prompt" fill src={src} />
               </div>
               <CardFooter className="p-2">
-                <Button variant="secondary" className="w-full" onClick={() => window.open(src)}>
+                <Button
+                  variant="secondary"
+                  className="w-full hover:bg-slate-300/60"
+                  onClick={() => window.open(src)}
+                >
                   <Download className="h-4 w-4 mr-2" />
                   <span>Download</span>
                 </Button>

@@ -12,7 +12,7 @@ const aiParameter: ChatCompletionMessageParam = {
   content: "You are a code generator. Answer in markdown mode, and use code comments for explanatory statements."
 }
 
-export async function POST(req: Request) {
+export async function edge(req: Request) {
   try {
     const { userId } = auth();
     const body = await req.json();

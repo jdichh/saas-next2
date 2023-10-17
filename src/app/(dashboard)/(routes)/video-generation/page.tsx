@@ -65,7 +65,7 @@ export default function VideoGenPage() {
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel className="text-muted-foreground">
-                    What type of videos do you want to see?
+                    What type of video do you want to see?
                   </FormLabel>
 
                   <FormControl className="m-0 py-0">

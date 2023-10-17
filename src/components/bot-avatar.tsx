@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar } from "@/components/ui/avatar";
 import { RadiusIcon } from "lucide-react";
 
 export function BotAvatar() {

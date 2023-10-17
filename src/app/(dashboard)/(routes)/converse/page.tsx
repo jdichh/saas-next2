@@ -1,23 +1,23 @@
 "use client";
 
-import * as ZOD from "zod";
-import axios from "axios";
-import Heading from "@/components/heading";
-import { useState, useRef, useEffect } from "react";
-import { MessagesSquare, SendHorizontalIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { formSchema } from "./constants";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { EmptyChatbox } from "@/components/empty-chatbox";
-import { Loader } from "@/components/loader";
-import { UserAvatar } from "@/components/user-avatar";
 import { BotAvatar } from "@/components/bot-avatar";
+import { EmptyChatbox } from "@/components/empty-chatbox";
+import Heading from "@/components/heading";
+import { Loader } from "@/components/loader";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { UserAvatar } from "@/components/user-avatar";
+import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { MessagesSquare, SendHorizontalIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
-import { cn } from "@/lib/utils";
+import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import * as ZOD from "zod";
+import { formSchema } from "./constants";
 
 export default function ConversePage() {
   const lastMessage = useRef<HTMLDivElement | null>(null);

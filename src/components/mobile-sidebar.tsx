@@ -10,7 +10,7 @@ export default function MobileSidebar() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="md:hidden">
+        <Button variant="ghost" size="icon" className="md:hidden" aria-label="Sidebar menu toggle">
           <Menu />
         </Button>
       </SheetTrigger>

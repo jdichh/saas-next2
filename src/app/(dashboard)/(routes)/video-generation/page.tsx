@@ -3,7 +3,13 @@
 import Heading from "@/components/heading";
 import { Loader } from "@/components/loader";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
@@ -52,15 +58,19 @@ export default function VideoGenPage() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-row justify-between items-center gap-2 rounded-md border py-2 px-3 focus-within:shadow-sm"
+            className="flex flex-row justify-between items-end gap-2 rounded-md border py-2 px-3 focus-within:shadow-sm"
           >
             <FormField
               name="prompt"
               render={({ field }) => (
                 <FormItem className="w-full">
+                  <FormLabel className="text-muted-foreground">
+                    What type of videos do you want to see?
+                  </FormLabel>
+
                   <FormControl className="m-0 py-0">
                     <Input
-                      className="outline-none border-0 focus-visible:ring-0 focus-visible:ring-transparent"
+                      className="outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                       disabled={isSubmitting}
                       placeholder="Screamer video"
                       {...field}
@@ -69,7 +79,7 @@ export default function VideoGenPage() {
                 </FormItem>
               )}
             />
-            <Button disabled={isSubmitting}>
+            <Button disabled={isSubmitting} aria-label="submit prompt">
               <SendHorizontalIcon size={18} />
             </Button>
           </form>
@@ -81,8 +91,8 @@ export default function VideoGenPage() {
           </div>
         )}
         {video && (
-          <video controls className="w-full mt-8"> 
-            <source src={video}/>
+          <video controls className="w-full mt-8">
+            <source src={video} />
           </video>
         )}
       </div>

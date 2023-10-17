@@ -4,7 +4,13 @@ import { BotAvatar } from "@/components/bot-avatar";
 import Heading from "@/components/heading";
 import { Loader } from "@/components/loader";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { UserAvatar } from "@/components/user-avatar";
 import { cn } from "@/lib/utils";
@@ -96,15 +102,20 @@ export default function ConversePage() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-row justify-between items-center gap-2 rounded-md border py-2 px-3 focus-within:shadow-sm"
+            className="flex flex-row justify-between items-end gap-2 rounded-md border py-2 px-3 focus-within:shadow-sm"
+            aria-label=""
           >
             <FormField
               name="prompt"
               render={({ field }) => (
                 <FormItem className="w-full">
+                  <FormLabel className="text-muted-foreground">
+                    Enter your message below.
+                  </FormLabel>
+
                   <FormControl className="m-0 py-0">
                     <Input
-                      className="outline-none border-0 focus-visible:ring-0 focus-visible:ring-transparent"
+                      className="outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                       disabled={isSubmitting}
                       placeholder="Is Zuckerberg a lizard?"
                       {...field}
@@ -113,7 +124,7 @@ export default function ConversePage() {
                 </FormItem>
               )}
             />
-            <Button disabled={isSubmitting}>
+            <Button disabled={isSubmitting} aria-label="submit prompt">
               <SendHorizontalIcon size={18} />
             </Button>
           </form>

@@ -24,6 +24,7 @@ export default function Sidebar() {
             <Link
               href={link.href}
               key={link.href}
+              aria-label={link.arialabel}
               className={cn(
                 "flex group p-3 w-full justify-start font-medium cursor-pointer hover:bg-white/10 rounded-md transition ease-in-out",
                 pathName === link.href ? "bg-white/10 outline outline-1" : ""

@@ -14,6 +14,7 @@ export const links = [
     href: "/converse",
     bgColor: "bg-emerald-50",
     color: "text-emerald-600",
+    arialabel: "converse with AI"
   },
   {
     title: "Image Generation",
@@ -22,6 +23,7 @@ export const links = [
     href: "/image-generation",
     bgColor: "bg-amber-50",
     color: "text-amber-600",
+    arialabel: "generate images"
   },
   {
     title: "Video Generation",
@@ -30,6 +32,7 @@ export const links = [
     href: "/video-generation",
     bgColor: "bg-lime-50",
     color: "text-lime-600",
+    arialabel: "generate videos"
   },
   {
     title: "Audio Generation",
@@ -38,6 +41,7 @@ export const links = [
     href: "/audio-generation",
     bgColor: "bg-teal-50",
     color: "text-teal-600",
+    arialabel: "generate audio"
   },
   {
     title: "Pair Programmer",
@@ -46,5 +50,6 @@ export const links = [
     href: "/pair-programmer",
     bgColor: "bg-sky-50",
     color: "text-sky-600",
+    arialabel: "program with AI"
   },
 ];

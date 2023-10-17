@@ -4,12 +4,20 @@ import Heading from "@/components/heading";
 import { Loader } from "@/components/loader";
 import { Button } from "@/components/ui/button";
 import { Card, CardFooter } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -66,15 +74,18 @@ export default function ImageGenPage() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 rounded-md border py-2 px-3 focus-within:shadow-sm"
+            className="flex flex-col md:flex-row md:justify-between md:items-end gap-2 rounded-md border py-2 px-3 focus-within:shadow-sm"
           >
             <FormField
               name="prompt"
               render={({ field }) => (
                 <FormItem className="w-full">
+                  <FormLabel className="text-muted-foreground">
+                    What images are on your mind?
+                  </FormLabel>
                   <FormControl className="m-0 py-0">
                     <Input
-                      className="outline-none border-0 focus-visible:ring-0 focus-visible:ring-transparent"
+                      className="outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                       disabled={isSubmitting}
                       placeholder="An image of the most sus person in the world."
                       {...field}
@@ -100,13 +111,16 @@ export default function ImageGenPage() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {amtOptions.map((options) => (
-                        <SelectItem key={options.value} value={options.value}>
-                          <span className="whitespace-nowrap mr-2">
-                            {options.label}
-                          </span>
-                        </SelectItem>
-                      ))}
+                      <SelectGroup>
+                        <SelectLabel>Count</SelectLabel>
+                        {amtOptions.map((options) => (
+                          <SelectItem key={options.value} value={options.value}>
+                            <span className="whitespace-nowrap mr-2">
+                              {options.label}
+                            </span>
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                 </FormItem>
@@ -122,6 +136,7 @@ export default function ImageGenPage() {
                     onValueChange={field.onChange}
                     value={field.value}
                     defaultValue={field.value}
+                    aria-label="select image resolution"
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -129,19 +144,22 @@ export default function ImageGenPage() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {resolutionOptions.map((options) => (
-                        <SelectItem key={options.value} value={options.value}>
-                          <span className="whitespace-nowrap mr-2">
-                            {options.label}
-                          </span>
-                        </SelectItem>
-                      ))}
+                      <SelectGroup>
+                        <SelectLabel>Resolution</SelectLabel>
+                        {resolutionOptions.map((options) => (
+                          <SelectItem key={options.value} value={options.value}>
+                            <span className="whitespace-nowrap mr-2">
+                              {options.label}
+                            </span>
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                 </FormItem>
               )}
             />
-            <Button disabled={isSubmitting}>
+            <Button disabled={isSubmitting} aria-label="submit prompt">
               <SendHorizontalIcon size={18} />
             </Button>
           </form>
@@ -168,6 +186,7 @@ export default function ImageGenPage() {
                   variant="secondary"
                   className="w-full hover:bg-slate-300/60"
                   onClick={() => window.open(src)}
+                  aria-label="download image"
                 >
                   <Download className="h-4 w-4 mr-2" />
                   <span>Download</span>

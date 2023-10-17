@@ -36,9 +36,9 @@ export const links = [
     color: "text-teal-600",
   },
   {
-    title: "Code Generation",
+    title: "Pair Programmer",
     icon: Code2Icon,
-    href: "/code-generation",
+    href: "/pair-programmer",
     bgColor: "bg-sky-50",
     color: "text-sky-600",
   },

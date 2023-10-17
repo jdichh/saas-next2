@@ -65,11 +65,23 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        "colorshift": {
+          '0%': { 'background-size': '200% 200%', 'background-position': '100% 0' },
+          '50%': { 'background-size': '200% 200%', 'background-position': '0 0' },
+          '100%': { 'background-size': '200% 200%', 'background-position': '100% 0' },
+
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "colorshift": 'colorshift 5s infinite'
       },
+      variants: {
+        extend: {
+          animation: ['responsive', 'motion-safe', 'motion-reduce']
+        }
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

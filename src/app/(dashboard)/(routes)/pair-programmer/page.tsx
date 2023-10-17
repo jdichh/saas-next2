@@ -63,7 +63,7 @@ export default function CodeGenPage() {
   return (
     <>
       <Heading
-        title="Code Generation"
+        title="Pair Programmer"
         description="Team up with an AI in programming."
         Icon={Code2Icon}
         iconColor="text-sky-600"

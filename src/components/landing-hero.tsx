@@ -3,7 +3,7 @@ import { links } from "@/lib/data";
 
 export default function LandingHero() {
   return (
-    <div className="font-semibold p-2 text-center space-y-5 max-w-[1920px] mx-auto flex flex-col items-center justify-center h-full">
+    <main className="font-semibold p-2 text-center space-y-5 max-w-[1920px] mx-auto flex flex-col items-center justify-center h-full">
       <h1 className="text-3xl sm:text-5xl space-y-5 font-extrabold">
         Harness the power of AI using{" "}
         <span className="animate-colorshift bg-gradient-to-r from-red-500 to-purple-500 bg-clip-text text-transparent">
@@ -23,6 +23,6 @@ export default function LandingHero() {
           </Card>
         ))}
       </aside>
-    </div>
+    </main>
   );
 }

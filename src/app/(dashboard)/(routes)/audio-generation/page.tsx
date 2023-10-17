@@ -62,7 +62,7 @@ export default function AudioGenPage() {
                     <Input
                       className="outline-none border-0 focus-visible:ring-0 focus-visible:ring-transparent"
                       disabled={isSubmitting}
-                      placeholder={`Cookie cutter rap "music".`}
+                      placeholder={`Cookie cutter rap "music"`}
                       {...field}
                     />
                   </FormControl>

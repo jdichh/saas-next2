@@ -3,7 +3,7 @@ import LandingNav from "@/components/landing-nav";
 
 export default function LandingPage() {
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full sm:overflow-hidden">
       <LandingNav />
       <LandingHero/>
     </div>

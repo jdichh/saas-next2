@@ -9,6 +9,7 @@ import {
 export const links = [
   {
     title: "Converse",
+    description: "Have a chat with an AI.",
     icon: MessagesSquare,
     href: "/converse",
     bgColor: "bg-emerald-50",
@@ -16,6 +17,7 @@ export const links = [
   },
   {
     title: "Image Generation",
+    description: `Unleash your inner AI "artistry".`,
     icon: ImageIcon,
     href: "/image-generation",
     bgColor: "bg-amber-50",
@@ -23,6 +25,7 @@ export const links = [
   },
   {
     title: "Video Generation",
+    description: "Prank someone. Create a screamer video.",
     icon: VideoIcon,
     href: "/video-generation",
     bgColor: "bg-lime-50",
@@ -30,6 +33,7 @@ export const links = [
   },
   {
     title: "Audio Generation",
+    description: "Be the next artist that sells their soul to a label.",
     icon: HeadphonesIcon,
     href: "/audio-generation",
     bgColor: "bg-teal-50",
@@ -37,6 +41,7 @@ export const links = [
   },
   {
     title: "Pair Programmer",
+    description: "Team up with an AI in programming.",
     icon: Code2Icon,
     href: "/pair-programmer",
     bgColor: "bg-sky-50",

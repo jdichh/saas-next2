@@ -1,11 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { useAuth } from "@clerk/nextjs";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@clerk/nextjs";
 import { RadiusIcon } from "lucide-react";
+import Link from "next/link";
 
 export default function LandingNav() {
   const { isSignedIn } = useAuth();
@@ -27,7 +25,7 @@ export default function LandingNav() {
         </Link>
         <div className="flex items-center gap-x-2 text-black">
           <Link href={isSignedIn ? "/dashboard" : "/sign-in"}>
-            <Button variant="outline" className="rounded-md">
+            <Button variant="outline" className="rounded-md hover:bg-violet-500 hover:scale-[1.05] active:scale-[0.95] transition border-none">
               Get Started
             </Button>
           </Link>

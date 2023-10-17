@@ -7,16 +7,16 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { HeadphonesIcon, SendHorizontalIcon } from "lucide-react";
+import { SendHorizontalIcon, VideoIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as ZOD from "zod";
 import { formSchema } from "./constants";
 
-export default function AudioGenPage() {
+export default function VideoGenPage() {
   const router = useRouter();
-  const [audio, setAudio] = useState<string>();
+  const [video, setVideo] = useState<string>();
 
   const form = useForm<ZOD.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -28,9 +28,9 @@ export default function AudioGenPage() {
   const isSubmitting = form.formState.isSubmitting;
   const onSubmit = async (values: ZOD.infer<typeof formSchema>) => {
     try {
-      setAudio(undefined);
-      const response = await axios.post("/api/audio", values);
-      setAudio(response.data.audio);
+      setVideo(undefined);
+      const response = await axios.post("/api/video", values);
+      setVideo(response.data[0]);
       form.reset();
     } catch (error: any) {
       console.log(error);
@@ -42,11 +42,11 @@ export default function AudioGenPage() {
   return (
     <>
       <Heading
-        title="Audio Generation"
-        description="Be the next artist that sells their soul to a label."
-        Icon={HeadphonesIcon}
-        iconColor="text-teal-600"
-        bgColor="bg-teal-50"
+        title="Video Generation"
+        description="Prank someone. Create a screamer video."
+        Icon={VideoIcon}
+        iconColor="text-lime-600"
+        bgColor="bg-lime-50"
       />
       <div className="px-2 space-y-3 w-full max-w-4xl mx-auto pt-[10.5px]">
         <Form {...form}>
@@ -62,7 +62,7 @@ export default function AudioGenPage() {
                     <Input
                       className="outline-none border-0 focus-visible:ring-0 focus-visible:ring-transparent"
                       disabled={isSubmitting}
-                      placeholder={`Cookie cutter rap "music".`}
+                      placeholder="Screamer video"
                       {...field}
                     />
                   </FormControl>
@@ -80,10 +80,10 @@ export default function AudioGenPage() {
             <Loader />
           </div>
         )}
-        {audio && (
-          <audio controls className="w-full mt-8"> 
-            <source src={audio}/>
-          </audio>
+        {video && (
+          <video controls className="w-full mt-8"> 
+            <source src={video}/>
+          </video>
         )}
       </div>
     </>

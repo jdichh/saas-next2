@@ -17,3 +17,6 @@ A SaaS (software as a service) product that utilizes AI models from Replicate an
 <li>Pair Programmer</li>
 <p>Enlist the help of GPT when programming.</p>
 </ul>
+
+## How to run it locally
+If you want to try out some things, download the source code, run it on VSCode/VSCodium/whatever, and use `pnpm install` and `pnpm run dev` to run it locally. Also, you have to get your own API keys from [OpenAI](https://openai.com/), [Clerk](https://clerk.com/), and [Replicate](https://replicate.com/) in order for the app to be functional.

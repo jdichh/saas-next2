@@ -1,4 +1,5 @@
 import { auth } from "@clerk/nextjs";
+import { OpenAIStream, StreamingTextResponse } from "ai";
 import { NextResponse } from "next/server";
 import OpenAi from "openai";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
@@ -9,8 +10,11 @@ const openai = new OpenAi({
 
 const aiParameter: ChatCompletionMessageParam = {
   role: "system",
-  content: "You are a code generator. Answer in markdown mode, and use code comments for explanatory statements."
-}
+  content:
+    "You are a code generator. Answer in markdown mode, and use code comments for explanatory statements.",
+};
+
+export const runtime = "edge";
 
 export async function POST(req: Request) {
   try {
@@ -32,10 +36,13 @@ export async function POST(req: Request) {
 
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [aiParameter, ...messages]
+      messages: [aiParameter, ...messages],
+      stream: true,
     });
 
-    return NextResponse.json(response.choices[0].message);
+    const stream = OpenAIStream(response);
+    // Respond with the stream
+    return new StreamingTextResponse(stream);
   } catch (error) {
     console.log("[CODE_GEN_ERROR]: ", error);
     return new NextResponse("Internal error: ", { status: 500 });

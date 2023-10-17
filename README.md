@@ -1,6 +1,6 @@
 # Dreamscape
 This is a side SAAS project that utilizes Replicate and OpenAI. <br>
-<strong>Some features such as Image and Video Generation may not work as Vercel limits the API timeout to about 10 seconds.</strong><br>
+<strong>Some features such as Image and Video Generation may not work as Vercel limits the API timeout to about 10 seconds in the Free/Hobby plan.</strong><br>
 However, it is actually functional.
 
 ## Features

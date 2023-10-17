@@ -56,6 +56,9 @@ dependencies:
   react-markdown:
     specifier: ^9.0.0
     version: 9.0.0(@types/react@18.2.28)(react@18.2.0)
+  replicate:
+    specifier: ^0.20.1
+    version: 0.20.1
   tailwind-merge:
     specifier: ^1.14.0
     version: 1.14.0
@@ -3591,6 +3594,11 @@ packages:
       mdast-util-to-hast: 13.0.2
       unified: 11.0.3
       vfile: 6.0.1
+    dev: false
+
+  /replicate@0.20.1:
+    resolution: {integrity: sha512-QVyI1rowGsSfNuDrRmumYPdCHa/fN/RkI3NHpcK0i5hSSiWK69URAyheAC/0MIAiS3oUs4kD56PB9zEI4oHENw==}
+    engines: {git: '>=2.11.0', node: '>=18.0.0', npm: '>=7.19.0', yarn: '>=1.7.0'}
     dev: false
 
   /resolve-from@4.0.0:

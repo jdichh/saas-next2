@@ -1,15 +1,11 @@
 "use client";
 
-import * as ZOD from "zod";
-import axios from "axios";
+import { EmptyChatbox } from "@/components/empty-chatbox";
 import Heading from "@/components/heading";
-import { useState } from "react";
-import { ImageIcon, SendHorizontalIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { amtOptions, formSchema } from "./constants";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Loader } from "@/components/loader";
 import { Button } from "@/components/ui/button";
+import { Card, CardFooter } from "@/components/ui/card";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -18,10 +14,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { EmptyChatbox } from "@/components/empty-chatbox";
-import { Loader } from "@/components/loader";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { Download, ImageIcon, SendHorizontalIcon } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as ZOD from "zod";
+import { amtOptions, formSchema, resolutionOptions } from "./constants";
 
 export default function ImageGenPage() {
   const router = useRouter();
@@ -43,7 +44,7 @@ export default function ImageGenPage() {
       const response = await axios.post("/api/image", values);
       const imgUrls = response.data.map((image: { url: string }) => image.url);
       setImages(imgUrls);
-      form.reset();
+    
     } catch (error: any) {
       console.log(error);
     } finally {
@@ -98,10 +99,39 @@ export default function ImageGenPage() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {amtOptions.map((amt) => (
-                        <SelectItem key={amt.value} value={amt.value}>
+                      {amtOptions.map((options) => (
+                        <SelectItem key={options.value} value={options.value}>
                           <span className="whitespace-nowrap mr-2">
-                            {amt.label}
+                            {options.label}
+                          </span>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="resolution"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <Select
+                    disabled={isSubmitting}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue defaultValue={field.value} />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {resolutionOptions.map((options) => (
+                        <SelectItem key={options.value} value={options.value}>
+                          <span className="whitespace-nowrap mr-2">
+                            {options.label}
                           </span>
                         </SelectItem>
                       ))}
@@ -124,6 +154,21 @@ export default function ImageGenPage() {
         {images.length === 0 && !isSubmitting && (
           <EmptyChatbox label="No generated images yet." />
         )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-8">
+          {images.map((src) => (
+            <Card key={src} className="rounded-md overflow-hidden">
+              <div className="relative aspect-square">
+                <Image alt="image prompt" fill src={src} />
+              </div>
+              <CardFooter className="p-2">
+                <Button variant="secondary" className="w-full" onClick={() => window.open(src)}>
+                  <Download className="h-4 w-4 mr-2" />
+                  <span>Download</span>
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
       </div>
     </>
   );

@@ -69,7 +69,7 @@ export const tools = [
   {
     title: "Video Generation",
     icon: VideoIcon,
-    href: "/vide-generation",
+    href: "/video-generation",
     bgColor: "bg-lime-50",
     color: "text-lime-600",
   },

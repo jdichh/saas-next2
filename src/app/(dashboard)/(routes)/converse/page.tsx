@@ -93,9 +93,6 @@ export default function ConversePage() {
             <Loader />
           </div>
         )}
-        {messages.length === 0 && !isSubmitting && (
-          <EmptyChatbox label="No conversations." />
-        )}
 
         <Form {...form}>
           <form

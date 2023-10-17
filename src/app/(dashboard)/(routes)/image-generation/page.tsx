@@ -63,7 +63,7 @@ export default function ImageGenPage() {
         iconColor="text-amber-600"
         bgColor="bg-amber-50"
       />
-      <div className="px-2 space-y-3 w-full max-w-4xl mx-auto">
+      <div className="px-2 space-y-3 w-full max-w-4xl mx-auto pt-[10.5px]">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -158,10 +158,7 @@ export default function ImageGenPage() {
             {errorMessage}
           </div>
         )}
-        {images.length === 0 && !isSubmitting && (
-          <EmptyChatbox label="No generated images yet." />
-        )}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
           {images.map((src) => (
             <Card key={src} className="rounded-md overflow-hidden">
               <div className="relative aspect-square">

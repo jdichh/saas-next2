@@ -111,9 +111,6 @@ export default function CodeGenPage() {
             <Loader />
           </div>
         )}
-        {messages.length === 0 && !isSubmitting && (
-          <EmptyChatbox label="No conversations." />
-        )}
 
         <Form {...form}>
           <form

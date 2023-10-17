@@ -21,6 +21,10 @@ export const amtOptions = [
     value: "3",
     label: "3 images",
   },
+  {
+    value: "4",
+    label: "4 images",
+  },
 ];
 
 export const resolutionOptions = [

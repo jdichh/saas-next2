@@ -161,7 +161,7 @@ export default function ImageGenPage() {
         {images.length === 0 && !isSubmitting && (
           <EmptyChatbox label="No generated images yet." />
         )}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-8">
           {images.map((src) => (
             <Card key={src} className="rounded-md overflow-hidden">
               <div className="relative aspect-square">

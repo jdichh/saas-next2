@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { SendHorizontalIcon, VideoIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -35,8 +34,20 @@ export default function VideoGenPage() {
   const onSubmit = async (values: ZOD.infer<typeof formSchema>) => {
     try {
       setVideo(undefined);
-      const response = await axios.post("/api/video", values);
-      setVideo(response.data[0]);
+      const response = await fetch("/api/video", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values)
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      setVideo(data[0]);
       form.reset();
     } catch (error: any) {
       console.log(error);

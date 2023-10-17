@@ -15,7 +15,6 @@ import { Input } from "@/components/ui/input";
 import { UserAvatar } from "@/components/user-avatar";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { MessagesSquare, SendHorizontalIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
@@ -44,11 +43,20 @@ export default function ConversePage() {
         content: values.prompt,
       };
       const newMessages = [...messages, userPrompts];
-      const response = await axios.post("/api/converse", {
-        messages: newMessages,
+      const response = await fetch("/api/converse", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ messages: newMessages })
       });
 
-      setMessages((current) => [...current, userPrompts, response.data]);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setMessages((current) => [...current, userPrompts, data]);
       form.reset();
     } catch (error: any) {
       console.log(error);

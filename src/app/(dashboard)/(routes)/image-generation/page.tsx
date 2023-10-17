@@ -22,7 +22,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { Download, ImageIcon, SendHorizontalIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -49,8 +48,20 @@ export default function ImageGenPage() {
   const onSubmit = async (values: ZOD.infer<typeof formSchema>) => {
     try {
       setImages([]);
-      const response = await axios.post("/api/image", values);
-      const imgUrls = response.data.map((image: { url: string }) => image.url);
+      const response = await fetch("/api/image", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values)
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      const imgUrls = data.map((image: { url: string }) => image.url);
       setImages(imgUrls);
       setErrorMessage(null);
     } catch (error: any) {

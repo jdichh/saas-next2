@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { HeadphonesIcon, SendHorizontalIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -35,8 +34,20 @@ export default function AudioGenPage() {
   const onSubmit = async (values: ZOD.infer<typeof formSchema>) => {
     try {
       setAudio(undefined);
-      const response = await axios.post("/api/audio", values);
-      setAudio(response.data.audio);
+      const response = await fetch("/api/audio", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values)
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      setAudio(data.audio);
       form.reset();
     } catch (error: any) {
       console.log(error);

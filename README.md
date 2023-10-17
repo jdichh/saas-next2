@@ -1,6 +1,6 @@
 # Dreamscape
 A SaaS (software as a service) product that utilizes AI models from Replicate and OpenAI. Features include image, video, audio & code generation, and the ability to have a conversation.
-<strong>Some features such as Image and Video Generation may not work as Vercel limits the API timeout to about 10 seconds in the Free/Hobby plan.</strong><br>
+<strong>Some features such as Image and Video Generation may not work as Vercel limits the API timeout to about 10 seconds in the Free/Hobby plan.</strong> However, everything works when run locally.
 
 [Video Demonstration](https://www.youtube.com/watch?v=W-M-yczcgSc)
 

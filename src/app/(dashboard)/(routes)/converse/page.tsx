@@ -1,7 +1,6 @@
 "use client";
 
 import { BotAvatar } from "@/components/bot-avatar";
-import { EmptyChatbox } from "@/components/empty-chatbox";
 import Heading from "@/components/heading";
 import { Loader } from "@/components/loader";
 import { Button } from "@/components/ui/button";
